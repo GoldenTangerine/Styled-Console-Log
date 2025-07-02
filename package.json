@@ -1,0 +1,110 @@
+{
+    "name": "styled-console-log",
+    "displayName": "Styled Console Log",
+    "description": "快速生成带样式的 console.log 语句",
+    "version": "0.0.2",
+    "icon": "icon.png",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:styled-console-log.insertLog"
+    ],
+    "main": "./out/extension.js",
+    "author": "sm",
+    "publisher": "sm",
+    "license": "MIT",
+    "contributes": {
+        "configuration": {
+            "title": "Styled Console Log",
+            "properties": {
+                "styledConsoleLog.style.backgroundColor": {
+                    "type": "string",
+                    "default": "#1e80ff",
+                    "description": "日志背景颜色"
+                },
+                "styledConsoleLog.style.color": {
+                    "type": "string",
+                    "default": "#ffffff",
+                    "description": "日志文字颜色"
+                },
+                "styledConsoleLog.style.padding": {
+                    "type": "string",
+                    "default": "3px 5px",
+                    "description": "日志内边距"
+                },
+                "styledConsoleLog.style.borderRadius": {
+                    "type": "string",
+                    "default": "5px",
+                    "description": "日志边框圆角"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "styled-console-log.insertStyledLog",
+                "title": "插入带样式的 Console Log (选择样式)"
+            },
+            {
+                "command": "styled-console-log.insertCustomStyledLog",
+                "title": "插入带样式的 Console Log (自定义样式)"
+            },
+            {
+                "command": "styled-console-log.removeAllLogs",
+                "title": "删除所有 Console Log"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "styled-console-log.insertStyledLog",
+                "key": "ctrl+alt+l",
+                "mac": "cmd+alt+l",
+                "when": "editorHasSelection"
+            },
+            {
+                "command": "styled-console-log.insertCustomStyledLog",
+                "key": "ctrl+alt+k",
+                "mac": "cmd+alt+k",
+                "when": "editorHasSelection"
+            },
+            {
+                "command": "styled-console-log.removeAllLogs",
+                "key": "ctrl+alt+d",
+                "mac": "cmd+alt+d"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "when": "editorHasSelection",
+                    "command": "styled-console-log.insertStyledLog",
+                    "group": "styled-console-log"
+                },
+                {
+                    "when": "editorHasSelection",
+                    "command": "styled-console-log.insertCustomStyledLog",
+                    "group": "styled-console-log"
+                },
+                {
+                    "command": "styled-console-log.removeAllLogs",
+                    "group": "styled-console-log"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "package": "vsce package"
+    },
+    "devDependencies": {
+        "@types/node": "^16.x.x",
+        "@types/vscode": "^1.60.0",
+        "typescript": "^4.9.5",
+        "vsce": "^1.103.1"
+    }
+}
