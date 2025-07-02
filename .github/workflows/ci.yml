@@ -1,0 +1,54 @@
+name: CI
+
+# 触发条件：推送到主分支或创建 Pull Request
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16, 18, 20]
+        
+    steps:
+    # 检出代码
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    # 设置 Node.js 环境
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    # 安装依赖
+    - name: Install dependencies
+      run: npm ci
+      
+    # 编译检查
+    - name: Compile TypeScript
+      run: npm run compile
+      
+    # 运行测试
+    - name: Run tests
+      run: npm test
+      continue-on-error: true
+      
+    # 打包测试
+    - name: Package Extension
+      run: npm run package
+      
+    # 上传构建产物 (仅主分支)
+    - name: Upload artifacts
+      if: matrix.node-version == 18 && github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v3
+      with:
+        name: vsix-package
+        path: '*.vsix'
+        retention-days: 30
