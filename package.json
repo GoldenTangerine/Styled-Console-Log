@@ -17,6 +17,14 @@
     "author": "sm",
     "publisher": "sm",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/GoldenTangerine/Styled-Console-Log.git"
+    },
+    "bugs": {
+        "url": "https://github.com/GoldenTangerine/Styled-Console-Log/issues"
+    },
+    "homepage": "https://github.com/GoldenTangerine/Styled-Console-Log#readme",
     "contributes": {
         "configuration": {
             "title": "Styled Console Log",

@@ -1,5 +1,7 @@
 # Styled Console Log
 
+**简体中文** | [English](README.en.md)
+
 一个强大的 VSCode 扩展，帮助你快速生成带样式的 console.log 语句，让你的调试输出更加美观和易于识别。
 
 ## ✨ 功能特性
@@ -133,10 +135,6 @@ console.log('%cOrder Module', 'background-color:#fa8c16;color:#fff;padding:3px 5
 - 在 GitHub 上提交 Issue
 - 通过 VSCode 扩展评论区反馈
 - 为扩展评分和评论
-
-## 📄 许可证
-
-MIT License
 
 ---
 
