@@ -49,8 +49,9 @@ async function removeAllConsoleLogs(editor) {
     // 获取文档的所有内容
     const document = editor.document;
     const text = document.getText();
-    // 使用正则表达式匹配 console.log 语句
-    const consoleLogRegex = /^.*console\.log\(.*\);?\s*$/gm;
+    // 使用更精确的正则表达式匹配 console.log 语句
+    // 匹配：可选空白 + console.log(...) + 可选分号 + 可选空白 + 换行
+    const consoleLogRegex = /^\s*console\.log\([^)]*(?:\([^)]*\)[^)]*)*\);?\s*[\r\n]*/gm;
     // 获取所有匹配的行
     const matches = [...text.matchAll(consoleLogRegex)];
     if (matches.length === 0) {
@@ -69,8 +70,8 @@ async function removeAllConsoleLogs(editor) {
     }
     // 应用编辑
     await vscode.workspace.applyEdit(workspaceEdit);
-    // 显示删除数量
-    vscode.window.showInformationMessage(`已删除 ${matches.length} 条 console.log 语句`);
+    // 显示删除数量通知
+    vscode.window.showInformationMessage(`🗑️ 已删除 ${matches.length} 条 console.log 语句`);
 }
 /**
  * @author sm
@@ -177,16 +178,8 @@ function activate(context) {
         if (!editor) {
             return;
         }
-        const document = editor.document;
-        const text = document.getText();
-        // 使用正则表达式匹配并删除所有 console.log
-        const newText = text.replace(/console\.log\(.*\);?\n?/g, '');
-        editor.edit(editBuilder => {
-            const firstLine = document.lineAt(0);
-            const lastLine = document.lineAt(document.lineCount - 1);
-            const textRange = new vscode.Range(firstLine.range.start, lastLine.range.end);
-            editBuilder.replace(textRange, newText);
-        });
+        // 使用已有的删除函数，确保有删除数量通知
+        removeAllConsoleLogs(editor);
     });
     context.subscriptions.push(insertStyledLog, insertCustomStyledLog, removeAllLogs);
 }

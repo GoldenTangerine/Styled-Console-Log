@@ -2,7 +2,7 @@
     "name": "styled-console-log",
     "displayName": "Styled Console Log",
     "description": "快速生成带样式的 console.log 语句",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "icon": "icon.png",
     "engines": {
         "vscode": "^1.60.0"
